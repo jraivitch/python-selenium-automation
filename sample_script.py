@@ -13,21 +13,14 @@ driver = webdriver.Chrome(service=service)
 driver.maximize_window()
 
 # open the url
-driver.get('https://www.google.com/')
+driver.get('https://www.target.com')
 
-# populate search field
-search = driver.find_element(By.NAME, 'q')
-search.clear()
-search.send_keys('Table')
+driver.find_element(By.XPATH, "//input[@id='search']").send_keys('tea')
+driver.find_element(By.CSS_SELECTOR, "[data-test='@web/Search/SearchButton']").click()
+sleep(5)
 
-# wait for 4 sec
-sleep(4)
+actual_text = driver.find_element(By.CSS_SELECTOR, "[data-test='lp-resultsCount']").text
+expected_text = 'tea'
 
-# click search button
-driver.find_element(By.NAME, 'btnK').click()
-
-# verify search results
-assert 'Table'.lower() in driver.current_url.lower(), f"Expected query not in {driver.current_url.lower()}"
+assert expected_text in actual_text, f"Expected {expected_text} not in {actual_text}"
 print('Test Passed')
-
-driver.quit()
