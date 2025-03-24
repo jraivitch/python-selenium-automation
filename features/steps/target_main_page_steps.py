@@ -20,12 +20,12 @@ PRODUCT_SEARCH_RESULT_COUNT = (By.CSS_SELECTOR, "[data-test='lp-resultsCount']")
 
 @given("Open Target Main Page")
 def open_target_main_page(context):
-    context.driver.get('https://www.target.com/')
+    context.app.main_page.open_main_page()
     context.driver.wait.until(EC.element_to_be_clickable(SEARCH_FIELD))
 
-@when("Search for {product}")
-def search_product(context, product):
-    context.driver.find_element(*SEARCH_FIELD).send_keys(product)
+@when("Search for {search_word}")
+def search_product(context, search_word):
+    context.app.header.search(search_word)
     context.driver.wait.until(EC.element_to_be_clickable(SEARCH_BUTTON)).click()
 
 

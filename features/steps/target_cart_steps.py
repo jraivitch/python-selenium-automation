@@ -9,10 +9,7 @@ CART_ITEM_TITLE = (By.CSS_SELECTOR, "[data-test='cartItem-title']")
 
 @then("Verify cart empty message is shown")
 def verify_empty_cart_message(context):
-    actual_text = context.driver.find_element(By.CSS_SELECTOR, "[data-test='boxEmptyMsg']").text
-    expected_text = 'Your cart is empty'
-    assert expected_text in actual_text, f"Error. Text {expected_text} not found in {actual_text}"
-
+    context.app.cart_page.verify_empty_message_shown()
 
 @then("Verify cart has {number_of_items} item(s)")
 def verify_number_of_cart_items(context, number_of_items):
