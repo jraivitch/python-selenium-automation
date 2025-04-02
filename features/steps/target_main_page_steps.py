@@ -7,9 +7,6 @@ from time import sleep
 SEARCH_FIELD = (By.CSS_SELECTOR, '#search')
 SEARCH_BUTTON = (By.CSS_SELECTOR, "[data-test='@web/Search/SearchButton']")
 CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartIcon']")
-SIGN_IN_BUTTON = (By.CSS_SELECTOR, "[data-test='@web/AccountLink']")
-SIGN_IN_RIGHT_NAV_BUTTON = (By.CSS_SELECTOR, "[class*='Content--after-open styles_ndsBaseModalDrawer']"
-    " [data-test='accountNav-signIn']")
 HEADER_LINKS = (By.CSS_SELECTOR, "[data-test*='@web/GlobalHeader/UtilityHeader/']")
 ADD_TO_CART_BUTTON = (By.CSS_SELECTOR, "[id*='addToCartButton']")
 SIDE_ADD_TO_CART_BUTTON = (By.CSS_SELECTOR, "[data-test='content-wrapper'] [id*='addToCartButton']")
@@ -32,45 +29,46 @@ def search_product(context, search_word):
 
 @when("Click on Cart Icon")
 def click_cart_icon(context):
-    context.driver.find_element(*CART_ICON).click()
+    context.app.header.click_cart_icon(CART_ICON)
 
 
 @when("Click on Sign-In")
 def click_sign_in(context):
-    context.driver.wait.until(EC.element_to_be_clickable(SIGN_IN_BUTTON)).click()
+    context.app.header.click_sign_in()
 
 
 
 @when("Click Sign-In from right navigation menu")
 def right_navigation_menu_sign_in(context):
-    context.driver.wait.until(EC.element_to_be_clickable(SIGN_IN_RIGHT_NAV_BUTTON)).click()
+   context.app.header.click_sign_in_right()
 
 
 @when("Click on add to cart button")
 def add_to_cart(context):
     context.driver.wait.until(EC.visibility_of_element_located(PRODUCT_SEARCH_RESULT_COUNT), message="Product not found")
-    context.driver.find_element(*ADD_TO_CART_BUTTON).click()
+    context.app.search_results_page.click_add_to_cart_button()
 
 
 
 @when("Store product name")
 def store_product_name(context):
     context.driver.wait.until(EC.visibility_of_element_located(SIDE_NAV_PRODUCT_NAME))
-    context.product_name = context.driver.find_element(*SIDE_NAV_PRODUCT_NAME).text
-    print(context.product_name)
+    context.app.search_results_page.store_product_name(SIDE_NAV_PRODUCT_NAME)
+
 
 @when("Click add to cart from side navigation window")
 def add_to_cart_from_side(context):
     context.driver.wait.until(EC.visibility_of_element_located(SIDE_NAV_PRODUCT_NAME),
         message="Add to cart from side navigation window not found"
     )
-    context.driver.find_element(*SIDE_ADD_TO_CART_BUTTON).click()
+    context.app.search_results_page.side_nav_add_to_cart_button(SIDE_ADD_TO_CART_BUTTON)
+
 
 
 
 @when("Open Cart page")
 def open_cart_page(context):
-    context.driver.get('https://www.target.com/cart')
+    context.app.cart_page.open_cart_page('https://www.target.com/cart')
 
 
 @then("Verify at least 1 link shown")

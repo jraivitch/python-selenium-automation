@@ -6,3 +6,4 @@ Feature: Cart tests
     Given Open Target Main Page
     When Click on Cart icon
     Then Verify cart empty message is shown
+    And Verify cart page opens
