@@ -17,6 +17,6 @@ class CartPage(Page):
         assert f'{number_of_items}' in actual_number_of_items, f'Expected {number_of_items} item(s) but got {actual_number_of_items} instead'
 
     def verify_cart_page_opens(self):
-        self.verify_url('https://www.target.com/cart')
+        self.verify_url(f'{self.base_url}cart')
 
 

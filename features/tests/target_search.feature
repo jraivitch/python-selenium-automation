@@ -39,5 +39,6 @@ Feature: Target Test Cases
     And Store product name
     And Click add to cart from side navigation window
     And Open Cart page
-    Then Verify cart has 1 item(s)
+    Then Verify cart page opens
+    And Verify cart has 1 item(s)
 #    Then Verify cart has correct product
